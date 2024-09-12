@@ -1,7 +1,6 @@
 import unittest
 from unittest.mock import patch
 import geo
-import sys
 
 class GeoTests(unittest.TestCase):
 
