@@ -1,0 +1,50 @@
+name: Python application
+
+on:
+  workflow_dispatch:
+    inputs:
+      apikey:
+        description: 'Apikey'
+        default: 'your api key'
+        required: true
+        type: string
+      city:
+        description: 'City'
+        default: 'Los Angeles'
+        required: false
+        type: string
+      state:
+        description: 'State'
+        default: 'CA'
+        required: false
+        type: string
+      zip:
+        description: 'zip'
+        default: '90210'
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.10"
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Run app
+      run: |
+        python geo.py "${{ inputs.city }}, ${{ inputs.state }}" "${{ inputs.zip }}" --appid ${{ inputs.apikey }}
+    - name: Test with unittest
+      run: |
+        python -m unittest tests/geotests.py 
