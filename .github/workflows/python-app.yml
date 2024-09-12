@@ -5,8 +5,23 @@ on:
     inputs:
       apikey:
         description: 'Apikey'
-        default: 'empty'
+        default: 'your api key'
         required: true
+        type: string
+      city:
+        description: 'City'
+        default: 'Los Angeles'
+        required: false
+        type: string
+      state:
+        description: 'State'
+        default: 'CA'
+        required: false
+        type: string
+      zip:
+        description: 'zip'
+        default: '90210'
+        required: false
         type: string
 
 permissions:
@@ -29,7 +44,7 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Run app
       run: |
-        python geo.py "Beverly Hills, CA" "90210" "12345" --appid ${{ inputs.apikey }}
+        python geo.py "${{ inputs.city }}, ${{ inputs.state }}" "${{ inputs.zip }}" --appid ${{ inputs.apikey }}
     - name: Test with unittest
       run: |
         python -m unittest tests/geotests.py 
