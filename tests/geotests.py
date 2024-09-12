@@ -6,7 +6,6 @@ import sys
 class GeoTests(unittest.TestCase):
 
     @patch('geo.requests.get')
-    @patch.object(sys, 'argv', ['geo.py', 'Beverly Hills, CA', '--appid', 'test_api_key'])
     def test_get_location_data_by_city(self, mock_get):
         mock_response = [{
             "name": "Beverly Hills",
